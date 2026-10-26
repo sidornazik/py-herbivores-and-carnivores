@@ -1,4 +1,4 @@
-from typing import Any
+from __future__ import annotations
 
 
 class AliveList(list):
@@ -13,13 +13,13 @@ class AliveList(list):
 
 class AnimalMeta(type):
     @property
-    def alive(cls) -> "AliveList":
+    def alive(cls) -> AliveList:
         if not hasattr(cls, "_alive"):
             cls._alive = AliveList()
         return cls._alive
 
     @alive.setter
-    def alive(cls, value: list) -> None:
+    def alive(cls, value: list[Animal]) -> None:
         cls._alive = AliveList(value)
 
 
@@ -50,6 +50,6 @@ class Herbivore(Animal):
 
 
 class Carnivore(Animal):
-    def bite(self, other: Any) -> None:
+    def bite(self, other: Animal) -> None:
         if isinstance(other, Herbivore) and not other.hidden:
             other.health -= 50
